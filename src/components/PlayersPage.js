@@ -203,7 +203,8 @@ function PlayersPage() {
 
   useEffect(() => {
     fetchData();
-  }, [id, fetchData]);
+  }, [fetchData]);
+  
 
   return (
     <div className="PlayersViewHost">
