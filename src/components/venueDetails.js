@@ -149,7 +149,7 @@ const VenueDetails = () => {
         console.log(response);
         if(response.ok){
           alert("Successfully bookmarked your Venue");
-        }else if(response.statusText == "Unauthorized"){
+        }else if(response.statusText === "Unauthorized"){
           alert("Session Time out. Please login to continue");
           handleSignout();
         }else{
