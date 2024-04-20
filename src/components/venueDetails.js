@@ -50,17 +50,27 @@ const VenueDetails = () => {
   const [mapURL, setMapURL] = useState("");
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.post(`${API_URL}/venue-details`, { venueId: id });
-      setVenueData(response.data);
-    } catch (error) {
-      console.error('Error fetching venue details:', error.message);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(`${API_URL}/venue-details`, { venueId: id });
+        setVenueData(response.data);
+      } catch (error) {
+        console.error('Error fetching venue details:', error.message);
+      }
+    };
+
+    const fetchReservations = async () => {
+      try {
+        const response = await axios.post(`${API_URL}/reservation-details`, { venueId: id });
+        setReservations(response.data.bookings);
+      } catch (error) {
+        console.error('Error fetching reservations:', error.message);
+      }
+    };
+
     fetchData();
+    fetchReservations();
   }, [id]);
 
   useEffect(() => {
@@ -86,31 +96,6 @@ const VenueDetails = () => {
       */
     }
   }, [venueData]);
-
-  /*
-  const fetchTimes = async () => {
-    try {
-      const response = await axios.post('/venue-reservation-times', { venue_id: id });
-      setVenueReservationTimes(response.data);
-    } catch (error) {
-      console.error('Error fetching venue reservation times:', error.message);
-    }
-  };
-  */
-
-  const fetchReservations = async () => {
-    try {
-      const response = await axios.post(`${API_URL}/reservation-details`, { venueId: id });
-      setReservations(response.data.bookings);
-    } catch (error) {
-      console.error('Error fetching reservations:', error.message);
-    }
-  };
-
-  useEffect(() => {
-    //fetchTimes();
-    fetchReservations();
-  }, [id]);
 
   const handleReservationButtonClick = (reservation) => {
     setSelectedReservation((prevReservation) =>

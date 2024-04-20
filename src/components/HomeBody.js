@@ -160,6 +160,10 @@ import { Button } from "./Button";
 import axios from 'axios';
 import ReservationsCard from "./ReservationsCard";
 
+useEffect(() => {
+    fetchReservations();
+  }, [id, fetchReservations]);
+
 const HomeBody = () => {
     const [search, setSearch] = useState('');
     const [reservations, setReservations] = useState([]);

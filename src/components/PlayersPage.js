@@ -172,6 +172,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import PlayerCard from "./PlayerCard";
 
+useEffect(() => {
+  fetchData();
+}, [id, fetchData]);
+
 function PlayersPage() {
   const [players, setPlayers] = useState([]);
   const [search, setSearch] = useState('');
