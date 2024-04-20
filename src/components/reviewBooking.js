@@ -4,10 +4,6 @@ import { useNavigate, Link, Form } from "react-router-dom";
 import { Button } from "./Button";
 import withAuth from './withAuth';
 
-useEffect(() => {
-  fetchData();
-}, [fetchData]);
-
 function ReviewBooking(){
 
     const bookingParams = new URLSearchParams(window.location.search);
@@ -47,6 +43,10 @@ function ReviewBooking(){
         navigate(`/payment?venueid=${id}&startTime=${startTime}&endTime=${endTime}&date=${date}`)
         //alert("Venue booked!");
     }
+    
+    useEffect(() => {
+      fetchData();
+    }, [fetchData]);
 
     return(
         <div className="reviewBookingBody">
