@@ -7,24 +7,24 @@ import axios from 'axios';
 import ReservationsCard from "./ReservationsCard";
 
 const HomeBody = () => {
-    const [search, setSearch] = useState('');
     const [reservations, setReservations] = useState([]);
     const userId = window.localStorage.getItem("userId");
     const API_URL = process.env.REACT_APP_API_URL;
 
-    const fetchReservations = async () => {
-        try {
-            const response = await axios.post(`${API_URL}/user-reservation-details`, { userId: window.localStorage.getItem('userId') });
-            console.log(response.data);
-            setReservations(response.data);
-        } catch (error) {
-            console.error('Error fetching reservations:', error.message);
-        }
-    };
-
     useEffect(() => {
+        const fetchReservations = async () => {
+            try {
+                const response = await axios.post(`${API_URL}/user-reservation-details`, { userId: window.localStorage.getItem('userId') });
+                console.log(response.data);
+                setReservations(response.data);
+            } catch (error) {
+                console.error('Error fetching reservations:', error.message);
+            }
+        };
+
         fetchReservations();
-    }, []);
+    }, [API_URL, userId]); 
+    
 
     return (
         <div className="homeContainer">
@@ -42,9 +42,11 @@ const HomeBody = () => {
                 {userId && (
                     <div className="ChildLeft">
                         <h3>Reservations:</h3>
-                        <div className='ReservationSearch'>
-                            <input className="searchInput" placeholder="Search Reservations" onChange={(e) => setSearch(e.target.value)} />
-                        </div>
+                        {reservations.length > 0 && (
+                            <div className='ReservationSearch'>
+                                <input className="searchInput" placeholder="Search Reservations" />
+                            </div>
+                        )}
                         {reservations.map((reservation) => (
                             <ReservationsCard
                                 key={reservation._id}
@@ -57,7 +59,6 @@ const HomeBody = () => {
                         ))}
                     </div>
                 )}
-
             </div>
         </div>
     )
